@@ -82,14 +82,24 @@ fig.add_trace(go.Scatter(
     hovertemplate='壁厚: %{x:.1f} mm<br>承载力: %{y:.1f} kN<extra></extra>'
 ))
 
-# 图表布局
+# 图表布局 (核心修改区：分离图例，解决遮挡问题)
 fig.update_layout(
     font=dict(family="Microsoft YaHei, SimHei, Arial, sans-serif"),
     xaxis_title="管壁厚度 t (mm)  [向左滑动代表将管壁削薄]",
     yaxis_title="极限承载力 P (kN)",
     yaxis=dict(range=[0, min(150, max(Pg_arr)*1.1)]),
-    legend=dict(x=0.02, y=0.98, bgcolor="rgba(255,255,255,0.8)"),
-    margin=dict(l=0, r=0, t=20, b=0),
+    
+    # 将图例移出图表，停靠在右侧
+    legend=dict(
+        yanchor="top",
+        y=1,
+        xanchor="left",
+        x=1.02,
+        bgcolor="rgba(255,255,255,0.8)"
+    ),
+    # 增加右侧(r)的边距，确保图例有足够的显示空间
+    margin=dict(l=0, r=160, t=20, b=0), 
+    
     height=450,
     hovermode="x unified"
 )
